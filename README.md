@@ -1,56 +1,39 @@
-# Welcome to your Expo app 👋
+# নাম, দেশ, ফুল, ফল
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+ক্লাসিক ছোটবেলার বাংলা শব্দের খেলা **"নাম, দেশ, ফুল, ফল"**-এর অফলাইন অ্যান্ড্রয়েড মোবাইল সংস্করণ (Phase 1 MVP)।
 
-## Get started
+## প্রযুক্তি স্ট্যাক
 
-1. Install dependencies
+- **React Native & Expo** (Expo SDK 58)
+- **TypeScript** (`strict: true`)
+- **Expo Router** (ফাইল-ভিত্তিক নেভিগেশন)
+- **NativeWind** (Tailwind CSS v3 ভিত্তিক স্টাইলিং)
+- **AsyncStorage** (অফলাইন ম্যাচ ইতিহাস ও পছন্দ সংরক্ষণ)
+- **Baloo Da 2** (`@expo-google-fonts/baloo-da-2` অফলাইন বাংলা ফন্ট)
+- **pnpm** (প্যাকেজ ম্যানেজমেন্ট)
 
-   ```bash
-   npm install
-   ```
+## প্রধান বৈশিষ্ট্য
 
-2. Start the app
+- **সম্পূর্ণ বাংলা ইন্টারফেস**: UI টেক্সট, ডায়ালগ, টাইমার, সতর্কবার্তা ও বাংলা সংখ্যা (`০-৯`)।
+- **১০টি বিভাগ**: দেশের নাম, ফুলের নাম, ফলের নাম, প্রাণীর নাম, মানুষের নাম, পেশার নাম, খাবারের নাম, নদীর নাম, বস্তুর নাম, স্থানের নাম (খেলা শুরুর আগে পছন্দমতো নির্বাচনযোগ্য)।
+- **২ থেকে ৬ খেলোয়াড়**: এক ডিভাইসে পালাক্রমে খেলার সুবিধা ও প্রাইভেসি হ্যান্ডঅফ পর্দা।
+- **সময়সীমা ও রাউন্ড**: ৩০, ৪৫, ৬০, ৯০ ও ১২০ সেকেন্ডের টাইমার; সময় শেষে স্বয়ংক্রিয় ইনপুট লক।
+- **বাংলা বর্ণমালা কাস্টমাইজেশন**: র‍্যান্ডম বর্ণের তালিকা কনফিগার বা ম্যানুয়ালি বর্ণ নির্বাচনের সুবিধা।
+- **ম্যানুয়াল উত্তর যাচাই ও স্কোরিং**: সঠিক ও অনন্য উত্তরে ১০ পয়েন্ট, মিলে গেলে ৫ পয়েন্ট, ভুল বা খালি উত্তরে ০ পয়েন্ট।
+- **অফলাইন ফলাফল ও ইতিহাস**: বিজয়ী উদযাপন, র‍্যাংকিং, বিভাগভিত্তিক উত্তর ও ম্যাচ ইতিহাস।
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## চালানোর নির্দেশনা
 
 ```bash
-npm run reset-project
+pnpm install
+pnpm start
+pnpm android
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## যাচাই কমান্ড
 
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+pnpm typecheck
+pnpm lint
+pnpm test
+```

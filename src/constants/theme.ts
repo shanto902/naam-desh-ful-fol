@@ -1,65 +1,39 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://unistyl.es/), etc.
- */
-
-import '@/global.css';
-
-import { Platform } from 'react-native';
-
-export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
+export const AppColors = {
+  ivory: '#FFFBF3',
+  surface: '#FFFFFF',
+  sand: '#F5EFE2',
+  parchment: '#EFE6D5',
+  border: '#E5DAC5',
+  ink: '#1E242B',
+  slateMuted: '#5B6470',
+  slateLight: '#8E96A0',
+  emerald: '#0D7C5F',
+  emeraldDark: '#095A45',
+  emeraldSoft: '#E3F5EE',
+  marigold: '#E85D2F',
+  marigoldSoft: '#FFF0EA',
+  amber: '#D97706',
+  amberSoft: '#FEF3C7',
+  indigo: '#4338CA',
+  indigoSoft: '#EEF2FF',
+  crimson: '#DC2626',
+  crimsonSoft: '#FEE2E2',
+  gold: '#EAB308',
+  goldSoft: '#FEF9C3',
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
-
-export const Spacing = {
-  half: 2,
-  one: 4,
-  two: 8,
-  three: 16,
-  four: 24,
-  five: 32,
-  six: 64,
+export const AppFonts = {
+  regular: 'BalooDa2_400Regular',
+  medium: 'BalooDa2_500Medium',
+  semibold: 'BalooDa2_600SemiBold',
+  bold: 'BalooDa2_700Bold',
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export const ROUND_DURATIONS = [30, 45, 60, 90, 120] as const;
+
+export const ROUND_COUNTS = [1, 2, 3, 5] as const;
+
+export const MIN_PLAYERS = 2;
+export const MAX_PLAYERS = 6;
+export const MIN_CATEGORIES = 1;
+export const MIN_AVAILABLE_LETTERS = 1;
