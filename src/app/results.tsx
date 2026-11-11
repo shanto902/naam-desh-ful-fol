@@ -102,6 +102,7 @@ export default function ResultsScreen() {
           <WinnerCelebration
             winnerNames={record.winnerNames}
             topScoreText={toBengaliDigits(topScore)}
+            standings={record.standings}
           />
         </View>
 
@@ -111,7 +112,7 @@ export default function ResultsScreen() {
           <PrimaryButton
             label="আবার খেলুন"
             iconName="replay"
-            variant="primary"
+            variant="secondary"
             onPress={handlePlayAgain}
           />
           <PrimaryButton

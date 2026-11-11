@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+APP_NAME="Naam Desh Ful Fol"
+APK_FILENAME="NaamDeshFulFol-release.apk"
+AAB_FILENAME="NaamDeshFulFol-release.aab"
+OUTPUT_DIR="build-output"
+
 # Automatically detect Android SDK location
 if [ -z "$ANDROID_HOME" ]; then
   if [ -f "android/local.properties" ]; then
@@ -37,9 +42,10 @@ mkdir -p "$TMPDIR" 2>/dev/null || true
 (cd android 2>/dev/null && ./gradlew --stop 2>/dev/null || true)
 
 echo "============================================="
-echo "     Amar Khoroch - Android Builder          "
+echo "    $APP_NAME - Android Builder"
 echo "============================================="
 echo "Android SDK: ${ANDROID_HOME:-Not Found}"
+echo "Output Dir:  $OUTPUT_DIR"
 echo "Temp Dir:    $TMPDIR"
 echo ""
 
@@ -60,12 +66,16 @@ case "$CHOICE" in
   1|aab|production)
     echo ""
     echo "▶ Building Play Store Bundle (.aab) locally via EAS..."
-    eas build --platform android --profile production --local
+    mkdir -p "$OUTPUT_DIR"
+    eas build --platform android --profile production --local --output="${OUTPUT_DIR}/${AAB_FILENAME}"
+    echo "AAB Location: ${OUTPUT_DIR}/${AAB_FILENAME}"
     ;;
   2|apk|preview)
     echo ""
     echo "▶ Building Installable APK (.apk) locally via EAS..."
-    eas build --platform android --profile preview --local
+    mkdir -p "$OUTPUT_DIR"
+    eas build --platform android --profile preview --local --output="${OUTPUT_DIR}/${APK_FILENAME}"
+    echo "APK Location: ${OUTPUT_DIR}/${APK_FILENAME}"
     ;;
   3|gradle|direct)
     echo ""
@@ -88,9 +98,9 @@ case "$CHOICE" in
       echo "▶ Syncing native Android config & assets (clearing image cache)..."
       rm -rf .expo/web/cache/production/images
       if [ ! -d "android" ] || [ "$CLEAN_PREBUILD" = true ]; then
-        EXPO_NO_TELEMETRY=1 npx expo prebuild --platform android --no-install
+        EXPO_NO_TELEMETRY=1 pnpm exec expo prebuild --platform android --no-install
       else
-        EXPO_NO_TELEMETRY=1 npx expo prebuild --platform android --no-clean --no-install
+        EXPO_NO_TELEMETRY=1 pnpm exec expo prebuild --platform android --no-clean --no-install
         rm -rf android/app/build/intermediates/merged_res* android/app/build/intermediates/packaged_res* android/app/build/intermediates/linked_resources_binary_format android/app/build/intermediates/optimized_processed_res android/app/build/intermediates/merged_manifest* android/app/build/intermediates/packaged_manifests android/app/build/intermediates/incremental/*Resources* 2>/dev/null || true
       fi
       touch android/.prebuild-stamp
@@ -100,17 +110,22 @@ case "$CHOICE" in
       chmod +x gradlew
       ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=armeabi-v7a,arm64-v8a,x86,x86_64
     )
-    mkdir -p build-output
+    mkdir -p "$OUTPUT_DIR"
+    rm -f "${OUTPUT_DIR}/AmarKhoroch-release.apk"
     APK_SRC="android/app/build/outputs/apk/release/app-release.apk"
+    META_SRC="android/app/build/outputs/apk/release/output-metadata.json"
     if [ -f "$APK_SRC" ]; then
-      cp "$APK_SRC" build-output/AmarKhoroch-release.apk
+      cp "$APK_SRC" "${OUTPUT_DIR}/${APK_FILENAME}"
+      if [ -f "$META_SRC" ]; then
+        cp "$META_SRC" "${OUTPUT_DIR}/output-metadata.json"
+      fi
       echo ""
       echo "============================================="
-      echo "   BUILD SUCCESSFUL! 🎉"
+      echo "   BUILD SUCCESSFUL!"
       echo "============================================="
-      echo "APK Location: build-output/AmarKhoroch-release.apk"
-      echo "File Size:    $(du -h build-output/AmarKhoroch-release.apk | cut -f1)"
-      echo "Install via USB: adb install -r build-output/AmarKhoroch-release.apk"
+      echo "APK Location: ${OUTPUT_DIR}/${APK_FILENAME}"
+      echo "File Size:    $(du -h "${OUTPUT_DIR}/${APK_FILENAME}" | cut -f1)"
+      echo "Install via USB: adb install -r ${OUTPUT_DIR}/${APK_FILENAME}"
     fi
     ;;
   4|cloud)

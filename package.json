@@ -42,10 +42,12 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "build:apk": "bash ./build-apk.sh 3",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "doctor": "pnpm dlx expo-doctor",
     "test": "tsc --ignoreConfig --ignoreDeprecations 6.0 --outDir /tmp/ndff-test-out --module commonjs --moduleResolution node --target es2022 --esModuleInterop --strict --skipLibCheck src/types/game.ts src/constants/alphabet.ts src/constants/categories.ts src/utils/bengali.ts src/engine/bengaliText.ts src/engine/letterSelector.ts src/engine/scoring.ts src/storage/gameStorage.ts && node --test tests/engine.test.mjs tests/storage.test.mjs"
   },
   "private": true

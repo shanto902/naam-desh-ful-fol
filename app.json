@@ -32,7 +32,7 @@
         {
           "backgroundColor": "#FFFBF3",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 96
+          "imageWidth": 260
         }
       ],
       "expo-font"

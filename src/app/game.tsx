@@ -19,6 +19,7 @@ import { ConfirmModal } from '../components/ConfirmModal';
 import { CountdownBanner } from '../components/CountdownBanner';
 import { LetterBadge } from '../components/LetterBadge';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { TurnHandoffStage } from '../components/TurnHandoffStage';
 import { CATEGORY_MAP } from '../constants/categories';
 import { AppColors, AppFonts } from '../constants/theme';
 import { useGame } from '../context/GameContext';
@@ -129,81 +130,26 @@ export default function GameScreen() {
 
   if (turnPhase === 'handoff') {
     return (
-      <SafeAreaView className="flex-1 bg-ivory">
-        {/* Top bar */}
-        <View className="flex-row items-center justify-between px-4 pt-2 pb-3 border-b border-parchment">
-          <Pressable
-            onPress={() => setExitModalOpen(true)}
-            className="w-10 h-10 rounded-full bg-surface border border-parchment items-center justify-center"
-          >
-            <MaterialCommunityIcons name="close" size={20} color={AppColors.ink} />
-          </Pressable>
-          <View className="px-3.5 py-1 rounded-full bg-emeraldSoft border border-emeraldBrand/25">
-            <BnText weight="bold" className="text-xs text-emeraldDark">
-              রাউন্ড {toBengaliDigits(currentRoundIndex + 1)} /{' '}
-              {toBengaliDigits(config.totalRounds)}
-            </BnText>
-          </View>
-          <View className="w-10" />
-        </View>
-
-        <View className="flex-1 items-center justify-center px-5">
-          <View className="w-full max-w-md bg-surface rounded-3xl p-6 border-2 border-parchment shadow-sm items-center">
-            <View className="w-16 h-16 rounded-full bg-indigoSoft items-center justify-center mb-3">
-              <MaterialCommunityIcons
-                name="cellphone-arrow-down"
-                size={34}
-                color={AppColors.indigo}
-              />
-            </View>
-
-            <View className="px-3 py-1 rounded-full bg-sand border border-parchment mb-3">
-              <BnText weight="semibold" className="text-xs text-slateMuted">
-                খেলোয়াড় {toBengaliDigits(currentPlayerIndex + 1)} /{' '}
-                {toBengaliDigits(config.players.length)}
-              </BnText>
-            </View>
-
-            <BnText weight="medium" className="text-sm text-slateMuted">
-              এখন পালা
-            </BnText>
-            <BnText
-              weight="bold"
-              className="text-3xl text-emeraldDark text-center mt-0.5 mb-3"
-              style={{ lineHeight: 44 }}
-            >
-              {currentPlayer.name}
-            </BnText>
-
-            <View className="w-full rounded-2xl bg-ivory p-4 border border-parchment mb-5">
-              <BnText className="text-sm text-ink/90 text-center leading-6">
-                ফোনটি{' '}
-                <BnText inline weight="bold">
-                  {currentPlayer.name}
-                </BnText>
-                -এর হাতে দিন। তৈরি হলে নিচের বাটনে চাপ দিন — সাথে সাথে নির্ধারিত বাংলা বর্ণ প্রদর্শিত হবে ও{' '}
-                <BnText inline weight="bold">
-                  {toBengaliDigits(config.roundDuration)} সেকেন্ড
-                </BnText>{' '}
-                সময় গণনা শুরু হবে।
-              </BnText>
-            </View>
-
-            <PrimaryButton
-              label="আমার পালা শুরু করুন"
-              iconName="play-circle"
-              onPress={() => {
-                if (Platform.OS !== 'web') {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(
-                    () => {}
-                  );
-                }
-                beginCurrentTurn();
-              }}
-              className="w-full"
-            />
-          </View>
-        </View>
+      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.ivory }}>
+        <TurnHandoffStage
+          key={turnKey}
+          currentPlayer={currentPlayer}
+          players={config.players}
+          currentPlayerIndex={currentPlayerIndex}
+          currentRoundNumber={currentRoundIndex + 1}
+          totalRounds={config.totalRounds}
+          roundDuration={config.roundDuration}
+          categories={selectedCategories}
+          onStartTurn={() => {
+            if (Platform.OS !== 'web') {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(
+                () => {}
+              );
+            }
+            beginCurrentTurn();
+          }}
+          onRequestExit={() => setExitModalOpen(true)}
+        />
 
         <ConfirmModal
           visible={exitModalOpen}
